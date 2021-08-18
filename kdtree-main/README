@@ -1,0 +1,52 @@
+Point<size_t N>类
+
+	成员变量:
+
+		double coords[N];
+
+	成员方法:
+
+		计算两点间距离
+		template <size_t N>
+		double Distance(const Point<N>& one, const Point<N>& two);
+
+		判断两点是否相等
+		template <size_t N>
+		bool operator==(const Point<N>& one, const Point<N>& two);
+
+		template <size_t N>
+		bool operator!=(const Point<N>& one, const Point<N>& two);
+
+BoundedPQueue类
+	
+	成员变量
+
+		elems multi_map用于存储priority和附加内容
+
+	成员函数
+
+		将某个值存入elems,如果队列数量超过范围则舍弃队列末尾值
+		enqueue 
+
+		提取出队列中最好和最差的值
+		best()
+		worst()
+
+**************************************************
+
+KDTree
+
+建树:tips通过建立索引减少点云数据操作量
+	SelectDimension 确定分割维度
+	Partition 确定分割点(nth_element 容易出现分割后存在相等点的bug)
+	node记录点云idx+分割维度+左右节点
+
+搜索:
+
+	KNN traverse 根据分割 平面距离判断搜索左侧子树 如果数量不足或者到分割平面的值小于最差值,继续搜索另一侧子树
+
+	radius traverse 半径搜索 根据当前节点分割维度进行处理
+														如果距离小于半径 搜索两侧节点
+														否则
+															如果节点在搜索点右侧(大),则继续在左侧节点搜索
+															反之亦然
